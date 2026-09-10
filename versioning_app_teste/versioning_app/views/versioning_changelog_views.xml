@@ -1,0 +1,53 @@
+<odoo>
+    <record id="view_versioning_changelog_list" model="ir.ui.view">
+        <field name="name">versioning.changelog.list</field>
+        <field name="model">versioning.changelog</field>
+        <field name="arch" type="xml">
+            <list default_order="commit_date desc">
+                <field name="repository_id"/>
+                <field name="version"/>
+                <field name="module_name"/>
+                <field name="message"/>
+                <field name="author_name"/>
+                <field name="committer_name"/>
+                <field name="commit_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_versioning_changelog_form" model="ir.ui.view">
+        <field name="name">versioning.changelog.form</field>
+        <field name="model">versioning.changelog</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="repository_id"/>
+                            <field name="version"/>
+                            <field name="module_name"/>
+                            <field name="commit_date"/>
+                        </group>
+                        <group>
+                            <field name="author_name"/>
+                            <field name="committer_name"/>
+                            <field name="commit_sha"/>
+                            <field name="github_url" widget="url"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="message"/>
+                        <field name="files_changed"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_versioning_changelog" model="ir.actions.act_window">
+        <field name="name">Histórico de atualizações</field>
+        <field name="res_model">versioning.changelog</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

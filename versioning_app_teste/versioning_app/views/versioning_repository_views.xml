@@ -1,0 +1,73 @@
+<odoo>
+    <record id="view_versioning_repository_form" model="ir.ui.view">
+        <field name="name">versioning.repository.form</field>
+        <field name="model">versioning.repository</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_test_connection" type="object"
+                            string="Testar conexão" class="btn-secondary"/>
+                    <button name="action_check_now" type="object"
+                            string="Verificar agora" class="btn-primary"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,connected,error"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Nome do repositório"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="github_owner"/>
+                            <field name="github_repo"/>
+                            <field name="branch"/>
+                            <field name="repo_kind"/>
+                        </group>
+                        <group>
+                            <field name="access_token" password="True"/>
+                            <field name="poll_interval_minutes"/>
+                            <field name="current_version"/>
+                            <field name="last_checked"/>
+                        </group>
+                    </group>
+                    <group invisible="not last_error">
+                        <field name="last_error"/>
+                    </group>
+                    <notebook>
+                        <page string="Histórico de atualizações">
+                            <field name="changelog_ids" readonly="1">
+                                <list>
+                                    <field name="commit_date"/>
+                                    <field name="version"/>
+                                    <field name="module_name"/>
+                                    <field name="message"/>
+                                    <field name="author_name"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_versioning_repository_list" model="ir.ui.view">
+        <field name="name">versioning.repository.list</field>
+        <field name="model">versioning.repository</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="repo_kind"/>
+                <field name="current_version"/>
+                <field name="state"/>
+                <field name="last_checked"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_versioning_repository" model="ir.actions.act_window">
+        <field name="name">Repositórios</field>
+        <field name="res_model">versioning.repository</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

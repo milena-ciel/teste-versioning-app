@@ -1,0 +1,12 @@
+<odoo>
+    <menuitem id="menu_versioning_root" name="Versionamento" sequence="60"/>
+    <menuitem id="menu_versioning_repository" name="Repositórios"
+              parent="menu_versioning_root" action="action_versioning_repository"
+              sequence="10"/>
+    <menuitem id="menu_versioning_changelog" name="Histórico"
+              parent="menu_versioning_root" action="action_versioning_changelog"
+              sequence="20"/>
+    <menuitem id="menu_versioning_recipient" name="Notificações"
+              parent="menu_versioning_root" action="action_versioning_notification_recipient"
+              sequence="30"/>
+</odoo>

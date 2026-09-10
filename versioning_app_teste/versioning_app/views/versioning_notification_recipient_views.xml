@@ -1,0 +1,21 @@
+<odoo>
+    <record id="view_versioning_notification_recipient_list" model="ir.ui.view">
+        <field name="name">versioning.notification.recipient.list</field>
+        <field name="model">versioning.notification.recipient</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="partner_id"/>
+                <field name="email"/>
+                <field name="notify_email"/>
+                <field name="notify_odoo"/>
+                <field name="repository_ids" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_versioning_notification_recipient" model="ir.actions.act_window">
+        <field name="name">Destinatários de notificação</field>
+        <field name="res_model">versioning.notification.recipient</field>
+        <field name="view_mode">list</field>
+    </record>
+</odoo>
