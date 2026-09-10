@@ -16,7 +16,8 @@ class VersioningChangelog(models.Model):
     author_email = fields.Char()
     committer_name = fields.Char()
     message = fields.Text()
-    module_name = fields.Char()
+    module_name = fields.Char(string="Nome técnico")
+    module_display_name = fields.Char(string="Aplicativo")
     files_changed = fields.Text()
     version = fields.Char()
     commit_date = fields.Datetime()
@@ -63,12 +64,12 @@ class VersioningChangelog(models.Model):
         return (
             "<p><b>%s</b> foi atualizado para a versão <b>%s</b>.</p>"
             "<p>%s</p>"
-            "<p>Módulo: %s<br/>Commit por: %s · Commit: %s</p>"
+            "<p>Aplicativo: %s<br/>Commit por: %s · Commit: %s</p>"
         ) % (
             self.repository_id.name,
             self.version,
             self.message or "",
-            self.module_name or "-",
+            self.module_display_name or self.module_name or "-",
             self.author_name or "-",
             (self.commit_sha or "")[:7],
         )
