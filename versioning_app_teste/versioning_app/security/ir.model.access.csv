@@ -2,3 +2,4 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_versioning_repository_user,versioning.repository.user,model_versioning_repository,base.group_user,1,1,1,1
 access_versioning_changelog_user,versioning.changelog.user,model_versioning_changelog,base.group_user,1,1,1,1
 access_versioning_notification_recipient_user,versioning.notification.recipient.user,model_versioning_notification_recipient,base.group_user,1,1,1,1
+access_versioning_dashboard_user,versioning.dashboard.user,model_versioning_dashboard,base.group_user,1,0,0,0
