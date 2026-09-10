@@ -1,3 +1,5 @@
+import ast
+import base64
 import logging
 from datetime import datetime
 
@@ -66,10 +68,16 @@ class VersioningRepository(models.Model):
 
     def action_test_connection(self):
         for rec in self:
-            url = "%s/repos/%s/%s" % (GITHUB_API, rec.github_owner, rec.github_repo)
+            url = "%s/repos/%s/%s" % (
+                GITHUB_API,
+                rec.github_owner,
+                rec.github_repo,
+            )
             try:
                 resp = requests.get(
-                    url, headers=rec._github_headers(), timeout=REQUEST_TIMEOUT
+                    url,
+                    headers=rec._github_headers(),
+                    timeout=REQUEST_TIMEOUT,
                 )
                 if resp.status_code == 200:
                     rec.write({"state": "connected", "last_error": False})
@@ -97,19 +105,26 @@ class VersioningRepository(models.Model):
             try:
                 rec._poll_repository()
             except Exception:
-                _logger.exception("Falha ao verificar o repositório %s", rec.name)
+                _logger.exception(
+                    "Falha ao verificar o repositório %s",
+                    rec.name,
+                )
 
     def _poll_repository(self):
         self.ensure_one()
+
         params = {"sha": self.branch, "per_page": 50}
         if self.last_checked:
-            params["since"] = self.last_checked.strftime("%Y-%m-%dT%H:%M:%SZ")
+            params["since"] = self.last_checked.strftime(
+                "%Y-%m-%dT%H:%M:%SZ"
+            )
 
         url = "%s/repos/%s/%s/commits" % (
             GITHUB_API,
             self.github_owner,
             self.github_repo,
         )
+
         try:
             resp = requests.get(
                 url,
@@ -131,29 +146,44 @@ class VersioningRepository(models.Model):
             self.write(
                 {
                     "state": "error",
-                    "last_error": "HTTP %s: %s" % (resp.status_code, resp.text[:200]),
+                    "last_error": "HTTP %s: %s"
+                    % (resp.status_code, resp.text[:200]),
                     "last_checked": fields.Datetime.now(),
                 }
             )
             return
 
         commits = resp.json()
-        commits = [c for c in commits if c.get("sha") != self.last_commit_sha]
-        commits.reverse()  # processa do mais antigo para o mais novo
+        commits = [
+            c for c in commits
+            if c.get("sha") != self.last_commit_sha
+        ]
+        commits.reverse()
 
         Changelog = self.env["versioning.changelog"]
         new_changelogs = Changelog
 
         for commit in commits:
             sha = commit["sha"]
+
             if Changelog.search_count(
-                [("repository_id", "=", self.id), ("commit_sha", "=", sha)]
+                [
+                    ("repository_id", "=", self.id),
+                    ("commit_sha", "=", sha),
+                ]
             ):
                 continue
 
             detail = self._fetch_commit_detail(sha)
-            files_changed = [f["filename"] for f in (detail.get("files") or [])]
-            module_name = self._guess_module_name(files_changed)
+            files_changed = [
+                f["filename"]
+                for f in (detail.get("files") or [])
+            ]
+
+            module_name, module_display_name = (
+                self._get_module_info(files_changed, sha)
+            )
+
             new_version = self._bump_version(self.current_version)
             commit_info = commit.get("commit", {})
 
@@ -161,11 +191,18 @@ class VersioningRepository(models.Model):
                 {
                     "repository_id": self.id,
                     "commit_sha": sha,
-                    "author_name": commit_info.get("author", {}).get("name"),
-                    "author_email": commit_info.get("author", {}).get("email"),
-                    "committer_name": commit_info.get("committer", {}).get("name"),
+                    "author_name": commit_info.get(
+                        "author", {}
+                    ).get("name"),
+                    "author_email": commit_info.get(
+                        "author", {}
+                    ).get("email"),
+                    "committer_name": commit_info.get(
+                        "committer", {}
+                    ).get("name"),
                     "message": commit_info.get("message"),
                     "module_name": module_name,
+                    "module_display_name": module_display_name,
                     "files_changed": "\n".join(files_changed),
                     "version": new_version,
                     "commit_date": self._parse_github_datetime(
@@ -174,12 +211,19 @@ class VersioningRepository(models.Model):
                     "github_url": commit.get("html_url"),
                 }
             )
+
             self.current_version = new_version
             new_changelogs |= changelog
 
-        vals = {"state": "connected", "last_error": False, "last_checked": fields.Datetime.now()}
+        vals = {
+            "state": "connected",
+            "last_error": False,
+            "last_checked": fields.Datetime.now(),
+        }
+
         if commits:
             vals["last_commit_sha"] = commits[-1]["sha"]
+
         self.write(vals)
 
         for changelog in new_changelogs:
@@ -187,35 +231,152 @@ class VersioningRepository(models.Model):
 
     def _fetch_commit_detail(self, sha):
         self.ensure_one()
+
         url = "%s/repos/%s/%s/commits/%s" % (
             GITHUB_API,
             self.github_owner,
             self.github_repo,
             sha,
         )
+
         try:
             resp = requests.get(
-                url, headers=self._github_headers(), timeout=REQUEST_TIMEOUT
+                url,
+                headers=self._github_headers(),
+                timeout=REQUEST_TIMEOUT,
             )
             if resp.status_code == 200:
                 return resp.json()
         except requests.RequestException:
-            _logger.exception("Falha ao buscar detalhes do commit %s", sha)
+            _logger.exception(
+                "Falha ao buscar detalhes do commit %s",
+                sha,
+            )
+
         return {}
+
+    def _get_module_info(self, files_changed, sha):
+        """Retorna (nome_tecnico, nome_exibicao_do_manifest)."""
+        self.ensure_one()
+
+        if not files_changed:
+            return False, False
+
+        first_path = files_changed[0]
+        parts = first_path.split("/")
+
+        # Procura um __manifest__.py subindo pela árvore do primeiro arquivo.
+        candidate_dirs = []
+        if len(parts) > 1:
+            directories = parts[:-1]
+            for index in range(len(directories), 0, -1):
+                candidate_dirs.append("/".join(directories[:index]))
+
+        # Também suporta repositório que seja um único módulo na raiz.
+        candidate_dirs.append("")
+
+        seen = set()
+        for module_path in candidate_dirs:
+            if module_path in seen:
+                continue
+            seen.add(module_path)
+
+            manifest_path = (
+                "%s/__manifest__.py" % module_path
+                if module_path
+                else "__manifest__.py"
+            )
+
+            manifest_content = self._fetch_github_file(
+                manifest_path,
+                sha,
+            )
+            if not manifest_content:
+                continue
+
+            manifest = self._parse_manifest(manifest_content)
+            technical_name = (
+                module_path.split("/")[-1]
+                if module_path
+                else self.github_repo
+            )
+            display_name = manifest.get("name") or technical_name
+
+            return technical_name, display_name
+
+        technical_name = self._guess_module_name(files_changed)
+        return technical_name, technical_name
+
+    def _fetch_github_file(self, path, sha):
+        self.ensure_one()
+
+        url = "%s/repos/%s/%s/contents/%s" % (
+            GITHUB_API,
+            self.github_owner,
+            self.github_repo,
+            path,
+        )
+
+        try:
+            resp = requests.get(
+                url,
+                headers=self._github_headers(),
+                params={"ref": sha},
+                timeout=REQUEST_TIMEOUT,
+            )
+
+            if resp.status_code != 200:
+                return False
+
+            payload = resp.json()
+            content = payload.get("content")
+            encoding = payload.get("encoding")
+
+            if not content or encoding != "base64":
+                return False
+
+            return base64.b64decode(content).decode(
+                "utf-8",
+                errors="replace",
+            )
+
+        except (requests.RequestException, ValueError, TypeError):
+            _logger.exception(
+                "Falha ao buscar arquivo %s no GitHub",
+                path,
+            )
+            return False
+
+    @staticmethod
+    def _parse_manifest(content):
+        try:
+            manifest = ast.literal_eval(content)
+            return manifest if isinstance(manifest, dict) else {}
+        except (ValueError, SyntaxError):
+            return {}
 
     @staticmethod
     def _guess_module_name(files_changed):
         if not files_changed:
             return False
+
         first_path = files_changed[0]
-        return first_path.split("/")[0] if "/" in first_path else first_path
+        return (
+            first_path.split("/")[0]
+            if "/" in first_path
+            else first_path
+        )
 
     @staticmethod
     def _parse_github_datetime(value):
         if not value:
             return False
+
         try:
-            dt = datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ")
+            dt = datetime.strptime(
+                value,
+                "%Y-%m-%dT%H:%M:%SZ",
+            )
             return fields.Datetime.to_string(dt)
         except ValueError:
             return False
@@ -223,8 +384,18 @@ class VersioningRepository(models.Model):
     @staticmethod
     def _bump_version(current_version):
         try:
-            major, minor, patch = (int(p) for p in (current_version or "1.0.0").split("."))
+            major, minor, patch = (
+                int(p)
+                for p in (
+                    current_version or "1.0.0"
+                ).split(".")
+            )
         except ValueError:
             major, minor, patch = 1, 0, 0
+
         patch += 1
-        return "%s.%s.%s" % (major, minor, patch)
+        return "%s.%s.%s" % (
+            major,
+            minor,
+            patch,
+        )
