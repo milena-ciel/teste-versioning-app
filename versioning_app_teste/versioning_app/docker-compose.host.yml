@@ -1,29 +1,29 @@
-version: "3.8"
-
 services:
   db:
     image: postgres:16
+    network_mode: host
     environment:
       POSTGRES_USER: odoo
       POSTGRES_PASSWORD: odoo
       POSTGRES_DB: postgres
+      PGPORT: 5432
     volumes:
       - odoo_db_data:/var/lib/postgresql/data
     restart: unless-stopped
 
   odoo:
     image: odoo:19.0
+    network_mode: host
     depends_on:
       - db
-    ports:
-      - "8069:8069"
     environment:
-      HOST: db
+      HOST: 127.0.0.1
+      PORT: 5432
       USER: odoo
       PASSWORD: odoo
     volumes:
       - odoo_web_data:/var/lib/odoo
-      - ./versioning_app:/mnt/extra-addons/versioning_app
+      - ./:/mnt/extra-addons/versioning_app
     restart: unless-stopped
 
 volumes:
