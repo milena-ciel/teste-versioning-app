@@ -253,6 +253,437 @@
                         </div>
                     </div>
 
+                    <!-- ===================================================== -->
+                    <!-- LOCALIZAÇÃO BR - DEMONSTRAÇÃO VISUAL -->
+                    <!-- ===================================================== -->
+
+                    <div class="mt-4"
+                        style="
+                            border: 1px solid #D8DEE6;
+                            border-radius: 16px;
+                            overflow: hidden;
+                            background: #FFFFFF;
+                            box-shadow: 0 4px 14px rgba(0,0,0,.06);
+                        ">
+
+                        <!-- CABEÇALHO -->
+                        <div style="
+                            padding: 22px 24px;
+                            background: linear-gradient(135deg, #0F4C81, #1E6AA8);
+                            color: white;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            gap: 20px;
+                        ">
+
+                            <div>
+                                <div style="
+                                    font-size: 24px;
+                                    font-weight: 700;
+                                    line-height: 1.2;
+                                ">
+                                    Localização Brasil - CIEL
+                                </div>
+
+                                <div style="
+                                    margin-top: 6px;
+                                    font-size: 14px;
+                                    opacity: .85;
+                                ">
+                                    Acompanhamento centralizado das atualizações da localização utilizada pelos clientes.
+                                </div>
+                            </div>
+
+                            <div style="
+                                background: rgba(255,255,255,.18);
+                                border: 1px solid rgba(255,255,255,.35);
+                                padding: 6px 12px;
+                                border-radius: 20px;
+                                font-size: 12px;
+                                font-weight: 600;
+                                white-space: nowrap;
+                            ">
+                                DEMONSTRAÇÃO
+                            </div>
+
+                        </div>
+
+
+                        <!-- INDICADORES -->
+                        <div style="padding: 22px 24px;">
+
+                            <div class="row g-3">
+
+                                <div class="col-12 col-md-6 col-xl-3">
+                                    <div style="
+                                        background: #F4F8FC;
+                                        border-radius: 12px;
+                                        padding: 18px;
+                                        border-left: 4px solid #0F4C81;
+                                        min-height: 105px;
+                                    ">
+                                        <div style="
+                                            color: #6C757D;
+                                            font-size: 13px;
+                                            margin-bottom: 8px;
+                                        ">
+                                            Versão monitorada
+                                        </div>
+
+                                        <div style="
+                                            font-size: 24px;
+                                            font-weight: 700;
+                                            color: #243746;
+                                        ">
+                                            19.0.3.14
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 col-md-6 col-xl-3">
+                                    <div style="
+                                        background: #F3FAF7;
+                                        border-radius: 12px;
+                                        padding: 18px;
+                                        border-left: 4px solid #198754;
+                                        min-height: 105px;
+                                    ">
+                                        <div style="
+                                            color: #6C757D;
+                                            font-size: 13px;
+                                            margin-bottom: 8px;
+                                        ">
+                                            Última atualização
+                                        </div>
+
+                                        <div style="
+                                            font-size: 20px;
+                                            font-weight: 700;
+                                            color: #243746;
+                                        ">
+                                            10/09/2026
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 col-md-6 col-xl-3">
+                                    <div style="
+                                        background: #FFF8ED;
+                                        border-radius: 12px;
+                                        padding: 18px;
+                                        border-left: 4px solid #F59E0B;
+                                        min-height: 105px;
+                                    ">
+                                        <div style="
+                                            color: #6C757D;
+                                            font-size: 13px;
+                                            margin-bottom: 8px;
+                                        ">
+                                            Atualizações recentes
+                                        </div>
+
+                                        <div style="
+                                            font-size: 24px;
+                                            font-weight: 700;
+                                            color: #243746;
+                                        ">
+                                            7
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 col-md-6 col-xl-3">
+                                    <div style="
+                                        background: #F8F4FB;
+                                        border-radius: 12px;
+                                        padding: 18px;
+                                        border-left: 4px solid #875A7B;
+                                        min-height: 105px;
+                                    ">
+                                        <div style="
+                                            color: #6C757D;
+                                            font-size: 13px;
+                                            margin-bottom: 8px;
+                                        ">
+                                            Status
+                                        </div>
+
+                                        <div style="
+                                            font-size: 20px;
+                                            font-weight: 700;
+                                            color: #198754;
+                                        ">
+                                            ● Atualizada
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <!-- CONTEÚDO -->
+                            <div class="row g-3 mt-2">
+
+                                <!-- HISTÓRICO -->
+                                <div class="col-12 col-xl-8">
+
+                                    <div style="
+                                        border: 1px solid #E9ECEF;
+                                        border-radius: 12px;
+                                        overflow: hidden;
+                                    ">
+
+                                        <div style="
+                                            padding: 16px 18px;
+                                            border-bottom: 1px solid #E9ECEF;
+                                            background: #FAFBFC;
+                                        ">
+                                            <strong style="font-size: 16px;">
+                                                Últimas alterações da Localização BR
+                                            </strong>
+                                        </div>
+
+                                        <div style="overflow-x:auto;">
+
+                                            <table style="
+                                                width: 100%;
+                                                border-collapse: collapse;
+                                                font-size: 14px;
+                                            ">
+
+                                                <thead>
+                                                    <tr style="
+                                                        background: #F8F9FA;
+                                                        color: #6C757D;
+                                                        text-align: left;
+                                                    ">
+                                                        <th style="padding: 12px 14px;">Data</th>
+                                                        <th style="padding: 12px 14px;">Versão</th>
+                                                        <th style="padding: 12px 14px;">Área</th>
+                                                        <th style="padding: 12px 14px;">Alteração</th>
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+
+                                                    <tr style="border-top:1px solid #EEEEEE;">
+                                                        <td style="padding:12px 14px;">
+                                                            10/09/2026
+                                                        </td>
+
+                                                        <td style="padding:12px 14px;">
+                                                            <span style="
+                                                                background:#E8F2FF;
+                                                                color:#0F4C81;
+                                                                padding:4px 9px;
+                                                                border-radius:12px;
+                                                                font-weight:600;
+                                                            ">
+                                                                19.0.3.14
+                                                            </span>
+                                                        </td>
+
+                                                        <td style="padding:12px 14px;">
+                                                            NFS-e
+                                                        </td>
+
+                                                        <td style="padding:12px 14px;">
+                                                            Ajustes no processamento de documentos fiscais de serviço.
+                                                        </td>
+                                                    </tr>
+
+
+                                                    <tr style="border-top:1px solid #EEEEEE;">
+                                                        <td style="padding:12px 14px;">
+                                                            08/09/2026
+                                                        </td>
+
+                                                        <td style="padding:12px 14px;">
+                                                            <span style="
+                                                                background:#E8F2FF;
+                                                                color:#0F4C81;
+                                                                padding:4px 9px;
+                                                                border-radius:12px;
+                                                                font-weight:600;
+                                                            ">
+                                                                19.0.3.13
+                                                            </span>
+                                                        </td>
+
+                                                        <td style="padding:12px 14px;">
+                                                            NF-e
+                                                        </td>
+
+                                                        <td style="padding:12px 14px;">
+                                                            Correções nas regras fiscais e geração do documento eletrônico.
+                                                        </td>
+                                                    </tr>
+
+
+                                                    <tr style="border-top:1px solid #EEEEEE;">
+                                                        <td style="padding:12px 14px;">
+                                                            05/09/2026
+                                                        </td>
+
+                                                        <td style="padding:12px 14px;">
+                                                            <span style="
+                                                                background:#E8F2FF;
+                                                                color:#0F4C81;
+                                                                padding:4px 9px;
+                                                                border-radius:12px;
+                                                                font-weight:600;
+                                                            ">
+                                                                19.0.3.12
+                                                            </span>
+                                                        </td>
+
+                                                        <td style="padding:12px 14px;">
+                                                            Financeiro
+                                                        </td>
+
+                                                        <td style="padding:12px 14px;">
+                                                            Ajustes relacionados à geração de parcelas e impostos.
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- DISTRIBUIÇÃO -->
+                                <div class="col-12 col-xl-4">
+
+                                    <div style="
+                                        border:1px solid #E9ECEF;
+                                        border-radius:12px;
+                                        padding:18px;
+                                        height:100%;
+                                    ">
+
+                                        <div style="
+                                            font-size:16px;
+                                            font-weight:600;
+                                            margin-bottom:18px;
+                                        ">
+                                            Alterações por área
+                                        </div>
+
+
+                                        <div style="margin-bottom:18px;">
+
+                                            <div style="
+                                                display:flex;
+                                                justify-content:space-between;
+                                                margin-bottom:6px;
+                                            ">
+                                                <span>NFS-e</span>
+                                                <strong>4</strong>
+                                            </div>
+
+                                            <div style="
+                                                height:10px;
+                                                background:#E9ECEF;
+                                                border-radius:10px;
+                                            ">
+                                                <div style="
+                                                    width:100%;
+                                                    height:100%;
+                                                    background:#0F4C81;
+                                                    border-radius:10px;
+                                                "></div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div style="margin-bottom:18px;">
+
+                                            <div style="
+                                                display:flex;
+                                                justify-content:space-between;
+                                                margin-bottom:6px;
+                                            ">
+                                                <span>NF-e</span>
+                                                <strong>2</strong>
+                                            </div>
+
+                                            <div style="
+                                                height:10px;
+                                                background:#E9ECEF;
+                                                border-radius:10px;
+                                            ">
+                                                <div style="
+                                                    width:50%;
+                                                    height:100%;
+                                                    background:#198754;
+                                                    border-radius:10px;
+                                                "></div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div>
+
+                                            <div style="
+                                                display:flex;
+                                                justify-content:space-between;
+                                                margin-bottom:6px;
+                                            ">
+                                                <span>Financeiro</span>
+                                                <strong>1</strong>
+                                            </div>
+
+                                            <div style="
+                                                height:10px;
+                                                background:#E9ECEF;
+                                                border-radius:10px;
+                                            ">
+                                                <div style="
+                                                    width:25%;
+                                                    height:100%;
+                                                    background:#F59E0B;
+                                                    border-radius:10px;
+                                                "></div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <div style="
+                                            margin-top:24px;
+                                            padding:12px;
+                                            background:#FFF8E1;
+                                            border-radius:8px;
+                                            color:#725B15;
+                                            font-size:12px;
+                                            line-height:1.5;
+                                        ">
+                                            Dados demonstrativos. A integração automática dependerá
+                                            de acesso autorizado ao repositório da Localização Brasil.
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </sheet>
             </form>
         </field>
