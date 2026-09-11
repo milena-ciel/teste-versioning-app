@@ -18,6 +18,14 @@ class VersioningDashboard(models.Model):
         string="Último aplicativo atualizado",
         compute="_compute_dashboard_data",
     )
+    latest_author_name = fields.Char(
+        string="Última pessoa que atualizou",
+        compute="_compute_dashboard_data",
+    )
+    latest_commit_message = fields.Text(
+        string="Mensagem do último commit",
+        compute="_compute_dashboard_data",
+    )
 
     @api.depends_context("uid")
     def _compute_dashboard_data(self):
@@ -36,6 +44,8 @@ class VersioningDashboard(models.Model):
                     or latest.module_name
                     or "-"
                 )
+                rec.latest_author_name = latest.author_name or "-"
+                rec.latest_commit_message = latest.commit_message or "-"
             else:
                 rec.latest_update_date = False
                 rec.latest_version = "-"
