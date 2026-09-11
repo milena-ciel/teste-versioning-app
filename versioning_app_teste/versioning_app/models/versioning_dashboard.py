@@ -45,7 +45,7 @@ class VersioningDashboard(models.Model):
                     or "-"
                 )
                 rec.latest_author_name = latest.author_name or "-"
-                rec.latest_commit_message = latest.commit_message or "-"
+                rec.latest_commit_message = latest.message or "-"
             else:
                 rec.latest_update_date = False
                 rec.latest_version = "-"
