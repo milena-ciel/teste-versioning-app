@@ -13,51 +13,62 @@
                     </div>
 
                     <div class="row g-3 mt-3">
-                        <div class="col-12 col-lg-4">
-                            <div class="card h-100 shadow-sm">
+                        <div class="col-12 col-lg-3">
+                            <div class="card h-100 border-0 shadow-sm" style="background: #E3F2FD;">
                                 <div class="card-body">
-                                    <div class="text-muted mb-2">
-                                        Última atualização
-                                    </div>
-                                    <h3 class="mb-0">
-                                        <field name="latest_update_date"
-                                               nolabel="1"
-                                               readonly="1"/>
-                                    </h3>
+                                    <div class="text-muted mb-2">Última atualização</div>
+                                    <h4 class="mb-0">
+                                        <field name="latest_update_date" nolabel="1" readonly="1"/>
+                                    </h4>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-12 col-lg-4">
-                            <div class="card h-100 shadow-sm">
+                        <div class="col-12 col-lg-3">
+                            <div class="card h-100 border-0 shadow-sm" style="background: #E8F5E9;">
                                 <div class="card-body">
-                                    <div class="text-muted mb-2">
-                                        Versão
-                                    </div>
-                                    <h3 class="mb-0">
-                                        <field name="latest_version"
-                                               nolabel="1"
-                                               readonly="1"/>
-                                    </h3>
+                                    <div class="text-muted mb-2">Versão</div>
+                                    <h4 class="mb-0">
+                                        <field name="latest_version" nolabel="1" readonly="1"/>
+                                    </h4>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-12 col-lg-4">
-                            <div class="card h-100 shadow-sm">
+                        <div class="col-12 col-lg-3">
+                            <div class="card h-100 border-0 shadow-sm" style="background: #FFF3E0;">
                                 <div class="card-body">
-                                    <div class="text-muted mb-2">
-                                        Último aplicativo atualizado
-                                    </div>
-                                    <h3 class="mb-0">
-                                        <field name="latest_module_display_name"
-                                               nolabel="1"
-                                               readonly="1"/>
-                                    </h3>
+                                    <div class="text-muted mb-2">Último aplicativo atualizado</div>
+                                    <h4 class="mb-0">
+                                        <field name="latest_module_display_name" nolabel="1" readonly="1"/>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-lg-3">
+                            <div class="card h-100 border-0 shadow-sm" style="background: #F3E5F5;">
+                                <div class="card-body">
+                                    <div class="text-muted mb-2">Última pessoa que atualizou</div>
+                                    <h4 class="mb-0">
+                                        <field name="latest_author_name" nolabel="1" readonly="1"/>
+                                    </h4>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="mt-4">
+                        <div class="card border-0 shadow-sm" style="background: #FAFAFA;">
+                            <div class="card-body">
+                                <h5 class="mb-3">Mensagem do último commit</h5>
+                                <div style="font-size: 15px; white-space: pre-wrap;">
+                                    <field name="latest_commit_message" nolabel="1" readonly="1"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </sheet>
             </form>
         </field>

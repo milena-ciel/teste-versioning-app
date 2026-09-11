@@ -40,3 +40,6 @@ class VersioningDashboard(models.Model):
                 rec.latest_update_date = False
                 rec.latest_version = "-"
                 rec.latest_module_display_name = "Nenhuma atualização registrada"
+                rec.latest_author_name = "-"
+                rec.latest_commit_message = "-"
+
