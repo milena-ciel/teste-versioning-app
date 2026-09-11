@@ -1,73 +1,495 @@
 <odoo>
-    <record id="view_versioning_repository_form" model="ir.ui.view">
-        <field name="name">versioning.repository.form</field>
-        <field name="model">versioning.repository</field>
+
+    <record id="view_versioning_dashboard_form"
+            model="ir.ui.view">
+
+        <field name="name">
+            versioning.dashboard.form
+        </field>
+
+        <field name="model">
+            versioning.dashboard
+        </field>
+
         <field name="arch" type="xml">
-            <form>
-                <header>
-                    <button name="action_test_connection" type="object"
-                            string="Testar conexão" class="btn-secondary"/>
-                    <button name="action_check_now" type="object"
-                            string="Verificar agora" class="btn-primary"/>
-                    <field name="state" widget="statusbar"
-                           statusbar_visible="draft,connected,error"/>
-                </header>
+
+            <form create="0"
+                  edit="0"
+                  delete="0">
+
                 <sheet>
-                    <div class="oe_title">
-                        <h1><field name="name" placeholder="Nome do repositório"/></h1>
+
+                    <!-- CABEÇALHO -->
+
+                    <div style="margin-bottom:25px;">
+
+                        <h1 style="
+                            margin-bottom:5px;
+                            font-weight:600;
+                        ">
+                            Painel de Versionamento
+                        </h1>
+
+                        <span class="text-muted">
+                            Monitoramento das customizações e
+                            atualizações identificadas no GitHub.
+                        </span>
+
                     </div>
-                    <group>
-                        <group>
-                            <field name="github_owner"/>
-                            <field name="github_repo"/>
-                            <field name="branch"/>
-                            <field name="repo_kind"/>
-                        </group>
-                        <group>
-                            <field name="access_token" password="True"/>
-                            <field name="poll_interval_minutes"/>
-                            <field name="current_version"/>
-                            <field name="last_checked"/>
-                        </group>
-                    </group>
-                    <group invisible="not last_error">
-                        <field name="last_error"/>
-                    </group>
-                    <notebook>
-                        <page string="Histórico de atualizações">
-                            <field name="changelog_ids" readonly="1">
-                                <list>
-                                    <field name="commit_date"/>
-                                    <field name="version"/>
-                                    <field name="module_name"/>
-                                    <field name="message"/>
-                                    <field name="author_name"/>
-                                </list>
-                            </field>
-                        </page>
-                    </notebook>
+
+
+                    <!-- CARDS PRINCIPAIS -->
+
+                    <div class="row g-3">
+
+                        <!-- VERSÃO -->
+
+                        <div class="col-12 col-md-6 col-xl-3">
+
+                            <div style="
+                                background:linear-gradient(
+                                    135deg,
+                                    #714B67,
+                                    #875A7B
+                                );
+                                color:white;
+                                padding:22px;
+                                border-radius:12px;
+                                min-height:125px;
+                                box-shadow:0 3px 10px
+                                    rgba(0,0,0,.10);
+                            ">
+
+                                <div style="
+                                    opacity:.8;
+                                    margin-bottom:8px;
+                                ">
+                                    Versão atual
+                                </div>
+
+                                <div style="
+                                    font-size:28px;
+                                    font-weight:700;
+                                ">
+                                    <field
+                                        name="latest_version"
+                                        nolabel="1"
+                                        readonly="1"
+                                    />
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ÚLTIMA ATUALIZAÇÃO -->
+
+                        <div class="col-12 col-md-6 col-xl-3">
+
+                            <div style="
+                                background:#E8F2FF;
+                                padding:22px;
+                                border-radius:12px;
+                                min-height:125px;
+                                border-left:5px solid #3B82F6;
+                                box-shadow:0 3px 10px
+                                    rgba(0,0,0,.06);
+                            ">
+
+                                <div class="text-muted">
+                                    Última atualização
+                                </div>
+
+                                <div style="
+                                    font-size:20px;
+                                    font-weight:600;
+                                    margin-top:10px;
+                                ">
+                                    <field
+                                        name="latest_update_date"
+                                        nolabel="1"
+                                        readonly="1"
+                                    />
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- APP -->
+
+                        <div class="col-12 col-md-6 col-xl-3">
+
+                            <div style="
+                                background:#EAF8F3;
+                                padding:22px;
+                                border-radius:12px;
+                                min-height:125px;
+                                border-left:5px solid #10B981;
+                                box-shadow:0 3px 10px
+                                    rgba(0,0,0,.06);
+                            ">
+
+                                <div class="text-muted">
+                                    Último aplicativo
+                                </div>
+
+                                <div style="
+                                    font-size:19px;
+                                    font-weight:600;
+                                    margin-top:10px;
+                                ">
+                                    <field
+                                        name="latest_module_display_name"
+                                        nolabel="1"
+                                        readonly="1"
+                                    />
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- AUTOR -->
+
+                        <div class="col-12 col-md-6 col-xl-3">
+
+                            <div style="
+                                background:#FFF5E6;
+                                padding:22px;
+                                border-radius:12px;
+                                min-height:125px;
+                                border-left:5px solid #F59E0B;
+                                box-shadow:0 3px 10px
+                                    rgba(0,0,0,.06);
+                            ">
+
+                                <div class="text-muted">
+                                    Atualizado por
+                                </div>
+
+                                <div style="
+                                    font-size:20px;
+                                    font-weight:600;
+                                    margin-top:10px;
+                                ">
+                                    <field
+                                        name="latest_author_name"
+                                        nolabel="1"
+                                        readonly="1"
+                                    />
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- INDICADORES -->
+
+                    <div class="row g-3 mt-2">
+
+                        <div class="col">
+
+                            <div class="card shadow-sm border-0">
+
+                                <div class="card-body text-center">
+
+                                    <h3>
+                                        <field
+                                            name="total_updates"
+                                            nolabel="1"
+                                        />
+                                    </h3>
+
+                                    <span class="text-muted">
+                                        Atualizações
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col">
+
+                            <div class="card shadow-sm border-0">
+
+                                <div class="card-body text-center">
+
+                                    <h3>
+                                        <field
+                                            name="updates_last_7_days"
+                                            nolabel="1"
+                                        />
+                                    </h3>
+
+                                    <span class="text-muted">
+                                        Últimos 7 dias
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col">
+
+                            <div class="card shadow-sm border-0">
+
+                                <div class="card-body text-center">
+
+                                    <h3>
+                                        <field
+                                            name="active_repositories"
+                                            nolabel="1"
+                                        />
+                                    </h3>
+
+                                    <span class="text-muted">
+                                        Repositórios ativos
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col">
+
+                            <div class="card shadow-sm border-0">
+
+                                <div class="card-body text-center">
+
+                                    <h3 style="color:#198754;">
+                                        <field
+                                            name="connected_repositories"
+                                            nolabel="1"
+                                        />
+                                    </h3>
+
+                                    <span class="text-muted">
+                                        Conectados
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col">
+
+                            <div class="card shadow-sm border-0">
+
+                                <div class="card-body text-center">
+
+                                    <h3 style="color:#DC3545;">
+                                        <field
+                                            name="error_repositories"
+                                            nolabel="1"
+                                        />
+                                    </h3>
+
+                                    <span class="text-muted">
+                                        Com erro
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- GRÁFICOS -->
+
+                    <div class="row g-3 mt-3">
+
+                        <div class="col-12 col-lg-6">
+
+                            <div class="card shadow-sm border-0">
+
+                                <div class="card-body">
+
+                                    <h4>
+                                        Atualizações nos últimos 7 dias
+                                    </h4>
+
+                                    <field
+                                        name="updates_chart_html"
+                                        widget="html"
+                                        nolabel="1"
+                                        readonly="1"
+                                    />
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-12 col-lg-6">
+
+                            <div class="card shadow-sm border-0">
+
+                                <div class="card-body">
+
+                                    <h4>
+                                        Aplicativos mais atualizados
+                                    </h4>
+
+                                    <field
+                                        name="modules_chart_html"
+                                        widget="html"
+                                        nolabel="1"
+                                        readonly="1"
+                                    />
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- AUTORES -->
+
+                    <div class="row g-3 mt-3">
+
+                        <div class="col-12 col-lg-6">
+
+                            <div class="card shadow-sm border-0">
+
+                                <div class="card-body">
+
+                                    <h4>
+                                        Atualizações por desenvolvedor
+                                    </h4>
+
+                                    <field
+                                        name="authors_chart_html"
+                                        widget="html"
+                                        nolabel="1"
+                                        readonly="1"
+                                    />
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ÚLTIMO COMMIT -->
+
+                        <div class="col-12 col-lg-6">
+
+                            <div style="
+                                background:#F8F9FA;
+                                border-radius:12px;
+                                padding:22px;
+                                height:100%;
+                            ">
+
+                                <h4>
+                                    Último commit
+                                </h4>
+
+                                <div style="
+                                    font-size:15px;
+                                    line-height:1.6;
+                                    margin-top:15px;
+                                    white-space:pre-wrap;
+                                ">
+
+                                    <field
+                                        name="latest_commit_message"
+                                        nolabel="1"
+                                        readonly="1"
+                                    />
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ÚLTIMAS ALTERAÇÕES -->
+
+                    <div class="card shadow-sm border-0 mt-4">
+
+                        <div class="card-body">
+
+                            <h4 style="margin-bottom:18px;">
+                                Últimas atualizações
+                            </h4>
+
+                            <field
+                                name="latest_updates_html"
+                                widget="html"
+                                nolabel="1"
+                                readonly="1"
+                            />
+
+                        </div>
+
+                    </div>
+
                 </sheet>
+
             </form>
+
         </field>
+
     </record>
 
-    <record id="view_versioning_repository_list" model="ir.ui.view">
-        <field name="name">versioning.repository.list</field>
-        <field name="model">versioning.repository</field>
-        <field name="arch" type="xml">
-            <list>
-                <field name="name"/>
-                <field name="repo_kind"/>
-                <field name="current_version"/>
-                <field name="state"/>
-                <field name="last_checked"/>
-            </list>
+
+    <record id="action_versioning_dashboard"
+            model="ir.actions.act_window">
+
+        <field name="name">
+            Painel
         </field>
+
+        <field name="res_model">
+            versioning.dashboard
+        </field>
+
+        <field name="view_mode">
+            form
+        </field>
+
+        <field name="view_id"
+               ref="view_versioning_dashboard_form"/>
+
+        <field name="res_id"
+               ref="versioning_dashboard_main"/>
+
+        <field name="target">
+            current
+        </field>
+
     </record>
 
-    <record id="action_versioning_repository" model="ir.actions.act_window">
-        <field name="name">Repositórios</field>
-        <field name="res_model">versioning.repository</field>
-        <field name="view_mode">list,form</field>
-    </record>
 </odoo>
