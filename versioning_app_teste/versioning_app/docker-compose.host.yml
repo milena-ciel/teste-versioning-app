@@ -19,10 +19,10 @@ services:
       PORT: 5432
       USER: odoo
       PASSWORD: odoo
+    restart: unless-stopped
     volumes:
       - odoo_web_data:/var/lib/odoo
       - ./:/mnt/extra-addons/versioning_app
-
 volumes:
   odoo_db_data:
   odoo_web_data:
