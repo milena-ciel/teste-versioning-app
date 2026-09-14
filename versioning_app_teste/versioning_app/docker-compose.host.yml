@@ -9,20 +9,21 @@ services:
       - odoo_db_data:/var/lib/postgresql/data
 
   odoo:
-    image: odoo:19.0
-    depends_on:
-      - db
-    ports:
-      - "8069:8069"
-    environment:
-      HOST: db
-      PORT: 5432
-      USER: odoo
-      PASSWORD: odoo
-    restart: unless-stopped
-    volumes:
-      - odoo_web_data:/var/lib/odoo
-      - ./:/mnt/extra-addons/versioning_app
+  image: odoo:19.0
+  depends_on:
+    - db
+  ports:
+    - "8069:8069"
+  command:
+    - odoo
+    - --db_host=db
+    - --db_port=5432
+    - --db_user=odoo
+    - --db_password=odoo
+  restart: unless-stopped
+  volumes:
+    - odoo_web_data:/var/lib/odoo
+    - ./:/mnt/extra-addons/versioning_app
 volumes:
   odoo_db_data:
   odoo_web_data:
